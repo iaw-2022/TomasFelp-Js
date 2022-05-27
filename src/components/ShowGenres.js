@@ -47,7 +47,7 @@ const ShowGenres = () => {
                         {results.map((genre) => (
                             <tr key={genre.id}>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.name}
+                                    <Link to={`/bands/${genre.name.toLowerCase()}`} className="link-warning">{genre.name}</Link>
                                 </td>
                             </tr>
                         ))}
