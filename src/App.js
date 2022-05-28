@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import ShowGenres from './components/ShowGenres';
 import ShowBandsByGenre from './components/ShowBandsByGenre';
+import ShowSongsByBand from './components/ShowSongsByBand';
 import Home from './components/Home';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
              <Route path="/" element={<Home/>} />
              <Route path="/genres" element={<ShowGenres/>} />
              <Route path="/bands/:genre" element={<ShowBandsByGenre/>} />
+             <Route path="/songs/:band" element={<ShowSongsByBand/>} />
           </Routes> 
         </BrowserRouter>
 

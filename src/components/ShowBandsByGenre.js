@@ -59,7 +59,7 @@ const ShowBandsByGenre = () => {
         <div className="container-md">
             <div>
                 <h2 className="text-center">
-                    Genres
+                    Bands
                 </h2>
 
                 <input value={search} onChange={searcher} type="text" placeholder="Search" className="form-control mt-5 shadow-lg bg-dark text-white"/>
@@ -74,19 +74,19 @@ const ShowBandsByGenre = () => {
                         <th class="bg-black">Year</th>
                     </thead>
                     <tbody>
-                        {results.map((genre) => (
-                            <tr key={genre.id}>
+                        {results.map((band) => (
+                            <tr key={band.id}>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.name}
+                                <Link to={`/songs/${band.id}`} className="link-warning">{band.name}</Link>
                                 </td>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.origin}
+                                    {band.origin}
                                 </td>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.idiom}
+                                    {band.idiom}
                                 </td>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.year}
+                                    {band.year}
                                 </td>
                             </tr>
                         ))}
