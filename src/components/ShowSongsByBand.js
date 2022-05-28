@@ -46,19 +46,19 @@ const ShowSongsByBand = () => {
                         <th class="bg-black">release date</th>
                     </thead>
                     <tbody>
-                        {results.map((genre) => (
-                            <tr key={genre.id}>
+                        {results.map((song) => (
+                            <tr key={song.id}>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.name}
+                                <Link to="/song/1" state={{ from: song }} className="link-warning">{song.name}</Link>
                                 </td>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.album}
+                                    {song.album}
                                 </td>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.release_date}
+                                    {song.release_date}
                                 </td>
                                 <td className="border border-0 rounded-end rounded-3">
-                                    {genre.year}
+                                    {song.year}
                                 </td>
                             </tr>
                         ))}
