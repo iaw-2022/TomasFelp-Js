@@ -139,7 +139,7 @@ const ShowBandsByGenre = () => {
                         {bands.map((band) => (
                             <tr key={band.id}>
                                 <td className="border-0">
-                                <Link to={`/songs/${band.id}`} className="link-warning">{band.name}</Link>
+                                <Link to={`/songs/${band.id}`} state={{ from: band }} className="link-warning">{band.name}</Link>
                                 </td>
                                 <td className="border-0">
                                     {band.origin}
