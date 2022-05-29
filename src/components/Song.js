@@ -56,12 +56,3 @@ const Song = () => {
 }
 
 export default Song
-
-
-/**
- * Song
-            {from.name}
-            {from.album}
-            {from.release_date}
-            {from.youtube_link}
- */
