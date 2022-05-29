@@ -22,7 +22,7 @@ const Song = () => {
 
     let spotifyPlayer
     if(from.spotify_link!=""){
-        spotifyPlayer=<iframe width="70%" height="80"
+        spotifyPlayer=<iframe className="opacity-100" width="70%" height="80"
                             src={from.spotify_link} 
                             title="YouTube video player" frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -33,8 +33,9 @@ const Song = () => {
     }
 
     return (
-        <div  className="container-md">
-           <div class="card text-center bg-dark">
+        <div  className="container-md opacity-75 min-vh-100">
+
+           <div class="card text-center bg-dark mt-5">
                 <div class="card-header">
                     <h1>{from.name}</h1>
                 </div>
