@@ -29,16 +29,19 @@ const ShowGenres = () => {
     }
 
     return (
-        <div className="container-md">
-            <div>
-                <h2 className="text-center">
-                    Genres
-                </h2>
+        <div className="container-fluid opacity-75">
 
-                <input value={search} onChange={searcher} type="text" placeholder="Search" className="form-control mt-5 shadow-lg bg-dark text-white"/>
+            <div className="navbar justify-content-center navbar-dark bg-dark container-fluid">
+                <div className="container-md">
+                    <form class="row align-items-center bg-dark" action="" method="GET">
+                        <text className="col">Genres</text>
+                        <input value={search} onChange={searcher} className="col form-control me-2 border-warning shadow-lg bg-dark text-white" type="text" name="origin" placeholder="Filter" aria-label="Search"/>
+                    </form>
+                    </div>
+
             </div>
            
-           <div className="min-vh-100">
+           <div className="min-vh-100 container-md">
                 <table className='table table-dark table-striped mt-5 shadow-lg'>
                     <thead>
                         <th class="bg-black">Name</th>
