@@ -10,23 +10,20 @@ const endpoint= 'https://indie-music.herokuapp.com/api'
 const ShowBandsByGenre = () => {
     const [ bands, setBands] = useState([])
     const [ lastPage, setLastPage] = useState("")
-    const [ search, setSearch] = useState("")
-    
+    const [ name, setName] = useState("")
+    const [ minYear, setMinYear] = useState("")
+    const [ maxYear, setMaxYear] = useState("")
+    const [ language, setLanguage] = useState("")
+    const [ origin, setOrigin] = useState("")
+
     let { genre } = useParams();
 
     useEffect(() => {
         getBands()
     }, [])
 
-    const searcher = (e) => {
-        setSearch(e.target.value)
-    }
-
-    const results = !search ? bands : bands.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase()))
-
-
     const getBands = async () => {
-        const response = await axios.get(`${endpoint}/bands/filter?page=${pageNumber}&name_genre=${genre}`)
+        const response = await axios.get(`${endpoint}/bands/filter?page=${pageNumber}&name_genre=${genre}&name=${name}&origin=${origin}&idiom=${language}&minYear=${minYear}&maxYear=${maxYear}`)
         setBands(response.data.data)
         setLastPage(response.data.last_page)
     }
@@ -55,17 +52,82 @@ const ShowBandsByGenre = () => {
         }
     }
 
-    return (
-        <div className="container-md">
-            <div>
-                <h2 className="text-center">
-                    Bands
-                </h2>
+    const changeName = (e) => {
+        setName(e.target.value)
+    }
 
-                <input value={search} onChange={searcher} type="text" placeholder="Search" className="form-control mt-5 shadow-lg bg-dark text-white"/>
+    const changeOrigin = (e) => {
+        setOrigin(e.target.value)
+    }
+
+    const changeLanguage = (e) => {
+        setLanguage(e.target.value)
+    }
+
+    const changeMinYear = (e) => {
+        setMinYear(e.target.value)
+    }
+
+    const changeMaxYear = (e) => {
+        setMaxYear(e.target.value)
+    }      
+
+    return (
+        <div className="container-fluid opacity-75">
+
+            <div className="navbar justify-content-center navbar-dark bg-dark container-fluid">
+            <div className="container-md">
+                <form class="row align-items-center bg-dark" action="" method="GET">
+                    <text className="col">Bands</text>
+                    <input value={name} onChange={changeName} className="col form-control me-2 border-warning shadow-lg bg-dark text-white" type="text" name="origin" placeholder="name" aria-label="Search"/>
+
+                    <button class="col me-2 btn btn-outline-warning" type="button" onClick={getBands} data-bs-target="#collapseExample" aria-expanded="false">
+                        Search
+                    </button>
+
+                    <button class="col btn btn-outline-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Filters
+                    </button>
+
+                </form>
+                </div>
+
+            </div> 
+
+            <div class="collapse bg-dark" id="collapseExample">
+               
+                <div className="flex-lg-column p-2">
+                    <div className="p-1 d-inline-flex w-75">
+                        <input value={minYear} onChange={changeMinYear} className="form-control me-2 border-warning shadow-lg bg-dark text-white" type="number" name="min year" placeholder="since the year" aria-label="Search"/>
+                        <input value={maxYear} onChange={changeMaxYear} className="form-control me-2 border-warning shadow-lg bg-dark text-white" type="number" name="max year" placeholder="until the year" aria-label="Search"/>
+                    </div>
+
+
+                        <div class="p-1 d-inline-flex form-floating  w-75">
+                            <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeOrigin} id="floatingSelect" aria-label="Floating label select example">
+                                <option selected value="">Any</option>
+                                <option value="United States">United States</option>
+                                <option value="Argentina">Argentina</option>
+                                <option value="Spain">Spain</option>
+                                <option value="Nederland">Nederland</option>
+                            </select>
+                            <label className="opacity-50 fs-6" for="floatingSelect">Origin</label>
+                        </div>        
+
+                        <div class="p-1 d-inline-flex form-floating  w-75">
+                            <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeLanguage} id="floatingSelect" aria-label="Floating label select example">
+                                <option selected value="">Any</option>
+                                <option value="English">English</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="German">German</option>
+                            </select>
+                            <label className="opacity-50 fs-6" for="floatingSelect">Language</label>
+                        </div>
+                    
+                </div>
             </div>
-           
-           <div>
+
+           <div className="min-vh-100 container-md">
                 <table className='table table-dark table-striped mt-5 shadow-lg'>
                     <thead>
                         <th class="bg-black">Name</th>
@@ -74,18 +136,18 @@ const ShowBandsByGenre = () => {
                         <th class="bg-black">Year</th>
                     </thead>
                     <tbody>
-                        {results.map((band) => (
+                        {bands.map((band) => (
                             <tr key={band.id}>
-                                <td className="border border-0 rounded-end rounded-3">
+                                <td className="border-0">
                                 <Link to={`/songs/${band.id}`} className="link-warning">{band.name}</Link>
                                 </td>
-                                <td className="border border-0 rounded-end rounded-3">
+                                <td className="border-0">
                                     {band.origin}
                                 </td>
-                                <td className="border border-0 rounded-end rounded-3">
+                                <td className="border-0">
                                     {band.idiom}
                                 </td>
-                                <td className="border border-0 rounded-end rounded-3">
+                                <td className="border-0">
                                     {band.year}
                                 </td>
                             </tr>
@@ -93,14 +155,6 @@ const ShowBandsByGenre = () => {
                     </tbody>
                 </table>
             </div>
-
-            <nav aria-label="Page navigation example">
-
-                <button className="btn-dark" onClick={prevPage}>prev</button>
-                <button className="btn-dark" onClick={nextPage}>next</button>
-
-            </nav>
-        
             
         </div>
         
