@@ -638,7 +638,6 @@ progress {
 }
 
 .container,
-.container-fluid,
 .container-sm,
 .container-md,
 .container-lg,
@@ -647,6 +646,14 @@ progress {
   width: 100%;
   padding-right: var(--bs-gutter-x, 0.75rem);
   padding-left: var(--bs-gutter-x, 0.75rem);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container-fluid{
+  width: 100%;
+  padding-right: 0;
+  padding-left: 0;
   margin-right: auto;
   margin-left: auto;
 }
