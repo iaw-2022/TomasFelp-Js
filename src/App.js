@@ -23,7 +23,7 @@ function App() {
             <form className="d-flex">
               <a class="nav-link" href="/">Home</a>
               <a class="nav-link" href="/genres">Genres</a>
-              <a class="nav-link" href="/bands">Bands</a>
+              <a class="nav-link" href="/bands/filter">Bands</a>
               <a class="nav-link" href="/song">Songs</a>
             </form>
           </div>

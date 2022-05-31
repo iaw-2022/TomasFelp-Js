@@ -15,15 +15,24 @@ const ShowBandsByGenre = () => {
     const [ maxYear, setMaxYear] = useState("")
     const [ language, setLanguage] = useState("")
     const [ origin, setOrigin] = useState("")
-
     let { genre } = useParams();
+    const [ genreFilter, setGenre] = useState(initGenre())
 
+    
+    function initGenre(){
+        if(genre=="filter"){
+            return ""
+        }else{
+            return genre
+        }
+    }
+    
     useEffect(() => {
         getBands()
     }, [])
 
     const getBands = async () => {
-        const response = await axios.get(`${endpoint}/bands/filter?page=${pageNumber}&name_genre=${genre}&name=${name}&origin=${origin}&idiom=${language}&minYear=${minYear}&maxYear=${maxYear}`)
+        const response = await axios.get(`${endpoint}/bands/filter?page=${pageNumber}&name_genre=${genreFilter}&name=${name}&origin=${origin}&idiom=${language}&minYear=${minYear}&maxYear=${maxYear}`)
         setBands(response.data.data)
         setLastPage(response.data.last_page)
     }
@@ -70,7 +79,21 @@ const ShowBandsByGenre = () => {
 
     const changeMaxYear = (e) => {
         setMaxYear(e.target.value)
-    }      
+    }  
+    
+    const changeGenre = (e) => {
+        setGenre(e.target.value)
+    }  
+
+    let filterGenre
+    if(genre=="filter"){
+        filterGenre=<div className="p-1 d-inline-flex w-75">
+                        <input value={genreFilter} onChange={changeGenre} className="form-control me-2 border-warning shadow-lg bg-dark text-white" type="text" name="filterGenre" placeholder="genre name" aria-label="Search"/>
+                    </div>
+        
+    }
+
+        
 
     return (
         <div className="container-fluid opacity-75">
@@ -103,26 +126,27 @@ const ShowBandsByGenre = () => {
                     </div>
 
 
-                        <div class="p-1 d-inline-flex form-floating  w-75">
-                            <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeOrigin} id="floatingSelect" aria-label="Floating label select example">
-                                <option selected value="">Any</option>
-                                <option value="United States">United States</option>
-                                <option value="Argentina">Argentina</option>
-                                <option value="Spain">Spain</option>
-                                <option value="Nederland">Nederland</option>
-                            </select>
-                            <label className="opacity-50 fs-6" for="floatingSelect">Origin</label>
-                        </div>        
+                    <div class="p-1 d-inline-flex form-floating  w-75">
+                        <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeOrigin} id="floatingSelect" aria-label="Floating label select example">
+                            <option selected value="">Any</option>
+                            <option value="United States">United States</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="Spain">Spain</option>
+                            <option value="Nederland">Nederland</option>
+                        </select>
+                        <label className="opacity-50 fs-6" for="floatingSelect">Origin</label>
+                    </div>        
 
-                        <div class="p-1 d-inline-flex form-floating  w-75">
-                            <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeLanguage} id="floatingSelect" aria-label="Floating label select example">
-                                <option selected value="">Any</option>
-                                <option value="English">English</option>
-                                <option value="Spanish">Spanish</option>
-                                <option value="German">German</option>
-                            </select>
-                            <label className="opacity-50 fs-6" for="floatingSelect">Language</label>
-                        </div>
+                    <div class="p-1 d-inline-flex form-floating  w-75">
+                        <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeLanguage} id="floatingSelect" aria-label="Floating label select example">
+                            <option selected value="">Any</option>
+                            <option value="English">English</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="German">German</option>
+                        </select>
+                        <label className="opacity-50 fs-6" for="floatingSelect">Language</label>
+                    </div>
+                       {filterGenre}
                     
                 </div>
             </div>
