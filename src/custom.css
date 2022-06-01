@@ -7397,6 +7397,7 @@ fieldset:disabled .btn {
 
 .link-warning {
   color: #ffc107;
+  text-decoration-line: none;
 }
 
 .link-warning:hover, .link-warning:focus {
