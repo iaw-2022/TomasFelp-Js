@@ -61,7 +61,7 @@ const ShowSongsByBand = () => {
                         {results.map((song) => (
                             <tr key={song.id}>
                                 <td className="border-0">
-                                <Link to="/song/1" state={{ from: song }} className="link-warning">{song.name}</Link>
+                                <Link to={`/song/${song.name}`} state={{ from: song }} className="link-warning">{song.name}</Link>
                                 </td>
                                 <td className="border-0">
                                     {song.album}

@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ShowGenres from './components/ShowGenres';
 import ShowBandsByGenre from './components/ShowBandsByGenre';
 import ShowSongsByBand from './components/ShowSongsByBand';
+import ShowSongs from './components/ShowSongs';
 import Song from './components/Song';
 import Home from './components/Home';
 
@@ -24,7 +25,7 @@ function App() {
               <a class="nav-link" href="/">Home</a>
               <a class="nav-link" href="/genres">Genres</a>
               <a class="nav-link" href="/bands/filter">Bands</a>
-              <a class="nav-link" href="/song">Songs</a>
+              <a class="nav-link" href="/songs/filter">Songs</a>
             </form>
           </div>
         </nav>
@@ -35,7 +36,8 @@ function App() {
              <Route path="/genres" element={<ShowGenres/>} />
              <Route path="/bands/:genre" element={<ShowBandsByGenre/>} />
              <Route path="/songs/:band" element={<ShowSongsByBand/>} />
-             <Route path="/song/:band" element={<Song/>} />
+             <Route path="/songs/filter" element={<ShowSongs/>} />
+             <Route path="/song/:name" element={<Song/>} />
           </Routes> 
         </BrowserRouter>
 
