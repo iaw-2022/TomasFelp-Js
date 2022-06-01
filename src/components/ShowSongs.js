@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import PaginationButtons from './PaginationButtons'
 
 import { Link } from 'react-router-dom'
 
@@ -14,36 +15,21 @@ const ShowSongs = () => {
     const [ releaseDateBefore, setReleaseDateBefore] = useState("")
     const [ genre, setGenre] = useState("")
     const [ lastPage, setLastPage] = useState("")
-    const [ pageNumber, setPageNumber] = useState(1)
+    const [ actualPage, setActualPage] = useState("")
+    var pageNumber=1
+    var disableNext=false
 
 
-
-
-    
     useEffect(() => {
         getSongs()
     }, [])
 
     const getSongs = async () => {
+        console.log("buscando canciones")
         const response = await axios.get(`${endpoint}/songs/filters?name=${name}&album=${album}&releaseDateAfter=${releaseDateAfter}&releaseDateBefore=${releaseDateBefore}&genre=${genre}&band=${band}&page=${pageNumber}`)
         setSongs(response.data.data)
         setLastPage(response.data.last_page)
-    }
-
-   
-
-    const nextPage = () => {
-        if(pageNumber<lastPage){
-            setPageNumber(pageNumber+1)
-            getSongs()
-        }
-    }
-
-    const prevPage = () => {
-        if(pageNumber>1){
-            setPageNumber(pageNumber-1)
-            getSongs()
-        }
+        setActualPage(response.data.current_page)
     }
 
     const changeName = (e) => {
@@ -70,13 +56,41 @@ const ShowSongs = () => {
         setReleaseDateBefore(e.target.value)
     } 
 
+    const nextPage = () => {
+        console.log("p n - : pn",pageNumber," - lp",lastPage)
+        if(pageNumber<lastPage){
+            pageNumber=pageNumber+1
+            console.log("p n: ",pageNumber)
+        }else{
+            disableNext=true
+        }
+        getSongs()
+    }
 
-        
+    const prevPage = () => {
+        console.log("p n - : pn",pageNumber," - fp",1)
+        if(pageNumber>1){
+            pageNumber--
+            console.log("p p: ",pageNumber)
+        }
+        getSongs()
+    }
+
+    
+
+    let paginationButtons
+    if(lastPage>1)
+        paginationButtons=<PaginationButtons 
+                                actualPage={actualPage}
+                                lastPage={lastPage}
+                                prevPage={prevPage}
+                                nextPage={nextPage}
+                            />        
 
     return (
         <div className="container-fluid opacity-75">
 
-<div className="navbar justify-content-center navbar-dark bg-dark container-fluid">
+        <div className="navbar justify-content-center navbar-dark bg-dark container-fluid">
             <div className="container-md">
                 <form class="row align-items-center bg-dark" action="" method="GET">
                     <text className="col">Bands</text>
@@ -153,6 +167,8 @@ const ShowSongs = () => {
                 </table>
             </div>
             
+            {paginationButtons}
+
         </div>
         
         

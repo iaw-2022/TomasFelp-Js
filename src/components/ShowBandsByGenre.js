@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router'
-
+import PaginationButtons from './PaginationButtons'
 
 import { Link } from 'react-router-dom'
 
@@ -10,6 +10,7 @@ const endpoint= 'https://indie-music.herokuapp.com/api'
 const ShowBandsByGenre = () => {
     const [ bands, setBands] = useState([])
     const [ lastPage, setLastPage] = useState("")
+    const [ actualPage, setActualPage] = useState("")
     const [ name, setName] = useState("")
     const [ minYear, setMinYear] = useState("")
     const [ maxYear, setMaxYear] = useState("")
@@ -17,7 +18,7 @@ const ShowBandsByGenre = () => {
     const [ origin, setOrigin] = useState("")
     let { genre } = useParams();
     const [ genreFilter, setGenre] = useState(initGenre())
-
+    var pageNumber = 1
     
     function initGenre(){
         if(genre=="filter"){
@@ -35,30 +36,21 @@ const ShowBandsByGenre = () => {
         const response = await axios.get(`${endpoint}/bands/filter?page=${pageNumber}&name_genre=${genreFilter}&name=${name}&origin=${origin}&idiom=${language}&minYear=${minYear}&maxYear=${maxYear}`)
         setBands(response.data.data)
         setLastPage(response.data.last_page)
+        setActualPage(response.data.current_page)
     }
-
-    const [ pageNumber, setPageNumber] = useState(window.localStorage.getItem('pageNumber'))
-
-    useEffect(() => {
-        setPageNumber(JSON.parse(window.localStorage.getItem('pageNumber')));
-    }, []);
-
-    useEffect(() => {
-        window.localStorage.setItem('pageNumber', pageNumber);
-    }, [pageNumber]);
 
     const nextPage = () => {
         if(pageNumber<lastPage){
-            setPageNumber(pageNumber+1)
-            getBands()
+            pageNumber++
         }
+        getBands()
     }
 
     const prevPage = () => {
         if(pageNumber>1){
-            setPageNumber(pageNumber-1)
-            getBands()
+            pageNumber--
         }
+        getBands()
     }
 
     const changeName = (e) => {
@@ -93,7 +85,15 @@ const ShowBandsByGenre = () => {
         
     }
 
-        
+
+    let paginationButtons
+    if(lastPage>1)
+        paginationButtons=<PaginationButtons 
+                                actualPage={actualPage}
+                                lastPage={lastPage}
+                                prevPage={prevPage}
+                                nextPage={nextPage}
+                            />       
 
     return (
         <div className="container-fluid opacity-75">
@@ -179,6 +179,8 @@ const ShowBandsByGenre = () => {
                     </tbody>
                 </table>
             </div>
+
+            {paginationButtons}
             
         </div>
         
