@@ -15,7 +15,7 @@ const ShowSongsByBand = () => {
     const { from } = location.state
 
     useEffect(() => {
-        getBands()
+        getSongs()
     }, [])
 
     const searcher = (e) => {
@@ -24,7 +24,7 @@ const ShowSongsByBand = () => {
 
     const results = !search ? songs : songs.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase()))
 
-    const getBands = async () => {
+    const getSongs = async () => {
         const response = await axios.get(`${endpoint}/band/songs/${band}`)
         setSongs(response.data)
     }
