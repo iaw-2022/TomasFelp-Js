@@ -8770,6 +8770,11 @@ fieldset:disabled .btn {
   color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
 }
 
+.text-lightBlue{
+  --bs-text-opacity: 1;
+  color: #21f3f3 !important;
+}
+
 .text-secondary {
   --bs-text-opacity: 1;
   color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
