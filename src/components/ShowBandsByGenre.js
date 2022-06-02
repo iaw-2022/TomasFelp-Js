@@ -16,6 +16,8 @@ const ShowBandsByGenre = () => {
     const [ maxYear, setMaxYear] = useState("")
     const [ language, setLanguage] = useState("")
     const [ origin, setOrigin] = useState("")
+    const [ languages, setLanguages] = useState([])
+    const [ origins, setOrigins] = useState([])
     let { genre } = useParams();
     const [ genreFilter, setGenre] = useState(initGenre())
     var pageNumber = 1
@@ -32,12 +34,31 @@ const ShowBandsByGenre = () => {
         getBands()
     }, [])
 
+    useEffect(() => {
+        getOrigins()
+    }, [])
+
+    useEffect(() => {
+        getLanguages()
+    }, [])
+
     const getBands = async () => {
         const response = await axios.get(`${endpoint}/bands/filter?page=${pageNumber}&name_genre=${genreFilter}&name=${name}&origin=${origin}&idiom=${language}&minYear=${minYear}&maxYear=${maxYear}`)
         setBands(response.data.data)
         setLastPage(response.data.last_page)
         setActualPage(response.data.current_page)
     }
+
+    const getOrigins = async () => {
+        const response = await axios.get(`${endpoint}/bands/origins`)
+        setOrigins(response.data)
+    }
+
+    const getLanguages = async () => {
+        const response = await axios.get(`${endpoint}/bands/languages`)
+        setLanguages(response.data)
+    }
+
 
     const nextPage = () => {
         if(pageNumber<lastPage){
@@ -129,10 +150,9 @@ const ShowBandsByGenre = () => {
                     <div class="p-1 d-inline-flex form-floating  w-75">
                         <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeOrigin} id="floatingSelect" aria-label="Floating label select example">
                             <option selected value="">Any</option>
-                            <option value="United States">United States</option>
-                            <option value="Argentina">Argentina</option>
-                            <option value="Spain">Spain</option>
-                            <option value="Nederland">Nederland</option>
+                            {origins.map((origin) => (
+                                <option value={origin.origin}>{origin.origin}</option>
+                            ))}
                         </select>
                         <label className="opacity-50 fs-6" for="floatingSelect">Origin</label>
                     </div>        
@@ -140,9 +160,9 @@ const ShowBandsByGenre = () => {
                     <div class="p-1 d-inline-flex form-floating  w-75">
                         <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeLanguage} id="floatingSelect" aria-label="Floating label select example">
                             <option selected value="">Any</option>
-                            <option value="English">English</option>
-                            <option value="Spanish">Spanish</option>
-                            <option value="German">German</option>
+                            {languages.map((language) => (
+                                <option value={language.idiom}>{language.idiom}</option>
+                            ))}
                         </select>
                         <label className="opacity-50 fs-6" for="floatingSelect">Language</label>
                     </div>
