@@ -9,6 +9,8 @@ import ShowSongsByBand from './components/ShowSongsByBand';
 import ShowSongs from './components/ShowSongs';
 import Song from './components/Song';
 import Home from './components/Home';
+import NavBar from './components/NavBar';
+
 
 function App() {
   return (
@@ -19,18 +21,10 @@ function App() {
         <div class="bg bg2"></div>
         <div class="bg bg3"></div>
 
-        <nav className="navbar justify-content-center navbar-dark bg-dark container-fluid opacity-75 shadow">
-          <div className="container-md">
-            <form className="d-flex">
-              <a class="nav-link" href="/">Home</a>
-              <a class="nav-link" href="/genres">Genres</a>
-              <a class="nav-link" href="/bands/filter">Bands</a>
-              <a class="nav-link" href="/songs/filter">Songs</a>
-            </form>
-          </div>
-        </nav>
+        
 
         <BrowserRouter>
+          <NavBar/>
           <Routes> 
              <Route path="/" element={<Home/>} />
              <Route path="/genres" element={<ShowGenres/>} />
@@ -42,6 +36,7 @@ function App() {
         </BrowserRouter>
 
       </header>
+      
     </div>
   );
 }
