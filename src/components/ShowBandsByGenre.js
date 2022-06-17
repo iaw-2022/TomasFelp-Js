@@ -3,8 +3,7 @@ import axios from 'axios'
 import { useParams } from 'react-router'
 import PaginationButtons from './PaginationButtons'
 import FilterBands from './FilterBands'
-
-import { Link } from 'react-router-dom'
+import BandCard from './BandCard'
 
 const endpoint= 'https://indie-music.herokuapp.com/api'
 
@@ -144,32 +143,14 @@ const ShowBandsByGenre = () => {
            />
 
            <div className="min-vh-100 container-md">
-                <table className='table table-dark table-striped mt-5 shadow-lg'>
-                    <thead>
-                        <th class="bg-black">Name</th>
-                        <th class="bg-black">Origin</th>
-                        <th class="bg-black">Language</th>
-                        <th class="bg-black">Year</th>
-                    </thead>
-                    <tbody>
-                        {bands.map((band) => (
-                            <tr key={band.id}>
-                                <td className="border-0">
-                                <Link to={`/songs/${band.id}`} state={{ from: band }} className="link-warning">{band.name}</Link>
-                                </td>
-                                <td className="border-0">
-                                    {band.origin}
-                                </td>
-                                <td className="border-0">
-                                    {band.idiom}
-                                </td>
-                                <td className="border-0">
-                                    {band.year}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <div class="row row-cols-1 row-cols-md-3 gx-2 pb-5">
+                    {bands.map((band) => (
+                        <div className="col">
+                            <BandCard band={band}/>
+                        </div>    
+                    ))}
+
+                </div>
             </div>
 
             {paginationButtons}
