@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router'
 import SimpleTextFilter from './SimpleTextFilter'
+import SongCardSimple from './SongCardSimple'
 
-import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 const endpoint= 'https://indie-music.herokuapp.com/api'
 
@@ -66,28 +66,15 @@ const ShowSongsByBand = () => {
             </div>
            
            <div className="min-vh-100 container-md">
-                <table className='table table-dark table-striped mt-5 shadow-lg'>
-                    <thead>
-                        <th class="bg-black">name</th>
-                        <th class="bg-black">album</th>
-                        <th class="bg-black">release date</th>
-                    </thead>
-                    <tbody>
-                        {results.map((song) => (
-                            <tr key={song.id}>
-                                <td className="border-0">
-                                <Link to={`/song/${song.name}`} state={{ from: song }} className="link-warning">{song.name}</Link>
-                                </td>
-                                <td className="border-0">
-                                    {song.album}
-                                </td>
-                                <td className="border-0">
-                                    {song.release_date}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+
+                <div class="row row-cols-1 row-cols-md-2 gx-2 pb-5">
+                    {songs.map((song) => (
+                        <div className="col">
+                            <SongCardSimple song={song}/>
+                        </div>    
+                    ))}
+                </div>
+
             </div>
         </div>
     )
