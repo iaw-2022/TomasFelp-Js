@@ -52,11 +52,3 @@ function SongCard(props){
 }
 
 export default SongCard
-
-/**
- 
-
-
-
-
- */
