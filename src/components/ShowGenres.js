@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import SimpleTextFilter from './SimpleTextFilter'
 
 import { Link } from 'react-router-dom'
 
@@ -9,7 +10,7 @@ const endpoint= 'https://indie-music.herokuapp.com/api'
 const ShowGenres = () => {
 
     const [ genres, setGenres] = useState([])
-
+    const [ results, setResults] = useState([])
     const [ search, setSearch] = useState("")
 
     useEffect(() => {
@@ -20,12 +21,19 @@ const ShowGenres = () => {
         setSearch(e.target.value)
     }
 
-    const results = !search ? genres : genres.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase()))
-
-
     const getAllGenres = async () => {
         const response = await axios.get(`${endpoint}/genres`)
         setGenres(response.data)
+        setResults(response.data)
+    }
+
+    const onFormSubmit = e => {
+        e.preventDefault();
+        update()
+    }
+
+    const update = () => {
+        setResults( genres.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase())))
     }
 
     return (
@@ -33,11 +41,14 @@ const ShowGenres = () => {
 
             <div className="navbar justify-content-center navbar-dark bg-dark container-fluid">
                 <div className="container-md">
-                    <form class="row align-items-center bg-dark" action="" method="GET">
-                        <text className="col">Genres</text>
-                        <input value={search} onChange={searcher} className="col form-control me-2 border-warning shadow-lg bg-dark text-white" type="text" name="origin" placeholder="Filter" aria-label="Search"/>
-                    </form>
-                    </div>
+                    <SimpleTextFilter
+                        text="Genres"
+                        onFormSubmit={onFormSubmit}
+                        search={search}
+                        searcher={searcher}
+                        update={update}
+                    />
+                </div>
 
             </div>
            
@@ -57,7 +68,6 @@ const ShowGenres = () => {
                     </tbody>
                 </table>
             </div>
-
         </div>
         
         

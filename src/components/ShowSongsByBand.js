@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router'
+import SimpleTextFilter from './SimpleTextFilter'
 
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
@@ -9,6 +10,7 @@ const endpoint= 'https://indie-music.herokuapp.com/api'
 const ShowSongsByBand = () => {
     const [ songs, setSongs] = useState([])
     const [ search, setSearch] = useState("")
+    const [ results, setResults] = useState([])
     
     let { band } = useParams();
     const location = useLocation()
@@ -22,11 +24,19 @@ const ShowSongsByBand = () => {
         setSearch(e.target.value)
     }
 
-    const results = !search ? songs : songs.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase()))
-
     const getSongs = async () => {
         const response = await axios.get(`${endpoint}/band/songs/${band}`)
         setSongs(response.data)
+        setResults(response.data)
+    }
+
+    const onFormSubmit = e => {
+        e.preventDefault();
+        update()
+    }
+
+    const update = () => {
+        setResults( songs.filter((dato)=> dato.name.toLowerCase().includes(search.toLocaleLowerCase())))
     }
 
     let officialWebsite
@@ -41,8 +51,13 @@ const ShowSongsByBand = () => {
 
             <div className="navbar justify-content-center navbar-dark bg-dark container-fluid">
                 <div className="container-md">
-                    <text className="pe-1">"{from.name}" songs</text>
-                    <input value={search} onChange={searcher} className="col form-control me-2 border-warning shadow-lg bg-dark text-white" type="text" name="origin" placeholder="Filter" aria-label="Search"/>
+                <SimpleTextFilter
+                        text={"songs of "+from.name}
+                        onFormSubmit={onFormSubmit}
+                        search={search}
+                        searcher={searcher}
+                        update={update}
+                    />
                 </div>
             </div>
 
