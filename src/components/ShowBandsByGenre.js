@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router'
 import PaginationButtons from './PaginationButtons'
+import FilterBands from './FilterBands'
 
 import { Link } from 'react-router-dom'
 
@@ -125,59 +126,22 @@ const ShowBandsByGenre = () => {
     return (
         <div className="container-fluid opacity-75">
 
-            <form onSubmit={onFormSubmit}>
-                <div className="navbar justify-content-center navbar-dark bg-dark container-fluid">
-                    <div className="container-md">
-                        <div class="row align-items-center bg-dark">
-                            <text className="col">Bands</text>
-                            <input value={name} onChange={changeName} className="col form-control me-2 border-warning shadow-lg bg-dark text-white" type="text" name="origin" placeholder="name" aria-label="Search"/>
-
-                            <button class="col me-2 btn btn-outline-warning" action={getBands} type="submit" data-bs-target="#collapseExample" aria-expanded="false">
-                                Search
-                            </button>
-
-                            <button class="col btn btn-outline-warning" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                Filters
-                            </button>
-
-                        </div>
-                    </div>
-
-                </div> 
-
-                <div class="collapse bg-dark" id="collapseExample">
-                
-                    <div className="flex-lg-column p-2">
-                        <div className="p-1 d-inline-flex w-75">
-                            <input value={minYear} onChange={changeMinYear} className="form-control me-2 border-warning shadow-lg bg-dark text-white" type="number" name="min year" placeholder="since the year" aria-label="Search"/>
-                            <input value={maxYear} onChange={changeMaxYear} className="form-control me-2 border-warning shadow-lg bg-dark text-white" type="number" name="max year" placeholder="until the year" aria-label="Search"/>
-                        </div>
-
-
-                        <div class="p-1 d-inline-flex form-floating  w-75">
-                            <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeOrigin} id="floatingSelect" aria-label="Floating label select example">
-                                <option selected value="">Any</option>
-                                {origins.map((origin) => (
-                                    <option value={origin.origin}>{origin.origin}</option>
-                                ))}
-                            </select>
-                            <label className="opacity-50 fs-6" for="floatingSelect">Origin</label>
-                        </div>        
-
-                        <div class="p-1 d-inline-flex form-floating  w-75">
-                            <select class="form-select form-select-sm border-warning shadow-lg bg-dark text-white" onChange={changeLanguage} id="floatingSelect" aria-label="Floating label select example">
-                                <option selected value="">Any</option>
-                                {languages.map((language) => (
-                                    <option value={language.idiom}>{language.idiom}</option>
-                                ))}
-                            </select>
-                            <label className="opacity-50 fs-6" for="floatingSelect">Language</label>
-                        </div>
-                        {filterGenre}
-                        
-                    </div>
-                </div>
-            </form>
+           <FilterBands filterByGenreName={genre=="filter"}
+                        genreFilter={genreFilter}
+                        changeGenre={changeGenre}
+                        onFormSubmit={onFormSubmit}
+                        name={name}
+                        changeName={changeName}
+                        getBands={getBands}
+                        minYear={minYear}
+                        changeMinYear={changeMinYear}
+                        maxYear={maxYear}
+                        changeMaxYear={changeMaxYear}
+                        changeOrigin={changeOrigin}
+                        origins={origins}
+                        changeLanguage={changeLanguage}
+                        languages={languages}
+           />
 
            <div className="min-vh-100 container-md">
                 <table className='table table-dark table-striped mt-5 shadow-lg'>
