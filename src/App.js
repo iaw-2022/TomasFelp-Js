@@ -10,6 +10,7 @@ import ShowSongs from './components/ShowSongs';
 import Song from './components/Song';
 import Home from './components/Home';
 import NavBar from './components/NavBar';
+import Background from './components/Background';
 
 
 function App() {
@@ -17,11 +18,7 @@ function App() {
     <div className="App">
       <header className="App-header">
 
-        <div class="bg"></div>
-        <div class="bg bg2"></div>
-        <div class="bg bg3"></div>
-
-        
+        <Background/>
 
         <BrowserRouter>
           <NavBar/>
