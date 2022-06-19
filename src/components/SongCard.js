@@ -1,28 +1,20 @@
 import React from 'react'
+import YoutubePlayer from './YoutubePlayer'
+import SpotifyPlayer from './SpotifyPlayer'
 
 function SongCard(props){
     
     let youtubePlayer
 
     if(props.song.youtube_link!=""){
-        youtubePlayer=<iframe width="70%" height="315" 
-                            src={props.song.youtube_link}
-                            title="YouTube video player" frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
+        youtubePlayer=<YoutubePlayer url={props.song.youtube_link}/>
     }else{
         youtubePlayer=<p class="card-text">playback on youtube is not available for this title</p>
     }
 
     let spotifyPlayer
     if(props.song.spotify_link!=""){
-        spotifyPlayer=<iframe className="opacity-100" width="70%" height="80"
-                            src={props.song.spotify_link} 
-                            title="YouTube video player" frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
+        spotifyPlayer=<SpotifyPlayer url={props.song.spotify_link} />
     }else{
         spotifyPlayer=<p class="card-text">spotify preview is not available for this title</p>
     }
@@ -52,11 +44,3 @@ function SongCard(props){
 }
 
 export default SongCard
-
-/**
- 
-
-
-
-
- */
