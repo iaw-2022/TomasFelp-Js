@@ -68,7 +68,7 @@ const ShowSongsByBand = () => {
            <div className="min-vh-100 container-md">
 
                 <div class="row row-cols-1 row-cols-md-2 gx-2 pb-5">
-                    {songs.map((song) => (
+                    {results.map((song) => (
                         <div className="col">
                             <SongCardSimple song={song}/>
                         </div>    
